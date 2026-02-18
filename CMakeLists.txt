@@ -3,4 +3,8 @@ project(SQLite C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_executable(SQLite main.c)
+add_executable(SQLite main.c
+        input_buffer.h
+        input_buffer.c
+        input_processing.h
+        input_processing.c)
