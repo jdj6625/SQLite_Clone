@@ -7,4 +7,8 @@ add_executable(SQLite main.c
         input_buffer.h
         input_buffer.c
         input_processing.h
-        input_processing.c)
+        input_processing.c
+        row.h
+        row.c
+        table.c
+        table.h)

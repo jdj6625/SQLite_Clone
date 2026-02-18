@@ -1,26 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
 #include "input_buffer.h"
 #include "input_processing.h"
 
 int main(int argc, char** argv)
 {
+    Table* table = newTable();
     InputBuffer* input_buff = newInputBuffer();
     while (true)
     {
         printPrompt();
         readInput(input_buff);
 
-        if (strncmp(input_buff->buffer, ".exit", 26) == 0)
+        if (input_buff->buffer[0] == '.')
         {
-            closeInputBuffer(input_buff);
-            exit(EXIT_SUCCESS);
+            switch (doMetaCommand(input_buff))
+            {
+                case (META_COMMAND_SUCCESS):
+                    continue;
+                case (META_COMMAND_UNRECOGNIZED_COMMAND):
+                    printf("Unrecognized command '%s'\n", input_buff->buffer);
+                    continue;
+            }
         }
 
-        else
+        Statement statement;
+        switch (prepareStatement(input_buff, &statement))
         {
-            printf("Invalid Command %s\n", input_buff->buffer);
+            case (PREPARE_SUCCESS):
+                break;
+            case (PREPARE_SYNTAX_ERROR):
+                printf("Syntax Error. Could not parse statement.\n");
+                continue;
+            case (PREPARE_UNRECOGNIZED_STATEMENT):
+                printf("Unrecognized keyword at start of '%s'.\n", input_buff->buffer);
+                continue;
+        }
+
+        switch (executeStatement(&statement, table))
+        {
+            case EXECUTE_SUCCESS:
+                printf("Executed.\n");
+                break;
+            case EXECUTE_TABLE_FULL:
+                printf("Error. Table full.\n");
+                break;
+            case EXECUTE_FAILURE:
+                printf("Execution failed.\n");
+                break;
         }
     }
 }
