@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 
         if (input_buff->buffer[0] == '.')
         {
-            switch (doMetaCommand(input_buff))
+            switch (doMetaCommand(input_buff, table))
             {
                 case (META_COMMAND_SUCCESS):
                     continue;

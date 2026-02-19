@@ -37,7 +37,7 @@ typedef enum {
 void printPrompt();
 ssize_t getline(char **lineptr, size_t *n, FILE *stream);
 void readInput(InputBuffer* input_buffer);
-MetaCommandResult doMetaCommand(InputBuffer* input_buffer);
+MetaCommandResult doMetaCommand(InputBuffer* input_buffer, Table* table);
 PrepareResult prepareStatement(const InputBuffer* input_buffer, Statement* statement);
 ExecuteResult executeInsert(const Statement* statement, Table* table);
 ExecuteResult executeSelect(const Statement* statement, Table* table);

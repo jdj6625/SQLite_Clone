@@ -55,10 +55,11 @@ void readInput(InputBuffer* input_buffer)
     input_buffer->buffer[bytes_read-1] = 0;
 }
 
-MetaCommandResult doMetaCommand(InputBuffer* input_buffer)
+MetaCommandResult doMetaCommand(InputBuffer* input_buffer, Table* table)
 {
     if (strcmp(input_buffer->buffer, ".exit") == 0)
     {
+        freeTable(table);
         exit(EXIT_SUCCESS);
     }
     else
