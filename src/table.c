@@ -1,6 +1,5 @@
-#include "table.h"
+#include "sqlite/table.h"
 #include <stdlib.h>
-#include <math.h>
 
 void* rowSlot(Table* table, const uint32_t row_num)
 {
