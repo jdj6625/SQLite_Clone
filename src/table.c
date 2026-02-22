@@ -1,8 +1,15 @@
 #include "sqlite/table.h"
+
+#include <assert.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 void* rowSlot(Table* table, const uint32_t row_num)
 {
+    assert(table);
+
+    if (!table) return nullptr;
+
     const uint32_t page_num = row_num/ROWS_PER_PAGE;
     void* page = table->pages[page_num];
     if (page == nullptr)
@@ -18,6 +25,8 @@ void* rowSlot(Table* table, const uint32_t row_num)
 Table* newTable()
 {
     Table* table = malloc(sizeof(Table));
+    if (!table) return nullptr;
+
     table->num_rows = 0;
     for (uint32_t i=0; i<TABLE_MAX_PAGES; i++)
     {
